@@ -8,7 +8,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -33,20 +32,19 @@ export class ProfilesController {
   // Post /profiles
   @Post()
   create(@Body() createProfileDto: CreateProfileDto) {
-    return createProfileDto;
+    return this.profilesService.create(createProfileDto);
   }
 
   // Put /profiles/:id
   @Put(':id')
   update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return {
-      id,
-      ...updateProfileDto,
-    };
+    return this.profilesService.update(id, updateProfileDto);
   }
 
   // Delete /profiles/:id
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  remove(@Param('id') id: string) {}
+  remove(@Param('id') id: string) {
+    return this.profilesService.remove(id);
+  }
 }
