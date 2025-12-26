@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import type { CreateProfileDto } from './dto/create-profile.dto';
 import type { UpdateProfileDto } from './dto/update-profile.dto';
-import { match } from 'assert';
 
 type Profile = {
   id: string;
@@ -38,7 +37,7 @@ export class ProfilesService {
     const matchingProfile = this.profiles.find((profile) => profile.id === id);
 
     if (!matchingProfile) {
-      throw new NotFoundException(`Profile with ID ${id} not found`);
+      throw new Error(`Profile with ID ${id} not found`);
     }
 
     return matchingProfile;
